@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<link th:href="@{/style/main.css}" type="text/css" rel="stylesheet"
+	media="screen,projection" />
+<title>List Process Instances</title>
+</head>
+<body>
+	<div style="overflow: auto;">
+		<div class="far-right">
+			<ul>
+				<li><a href="/createApplicant">创建申请单</a></li>
+				<li><a href="/">首页</a></li>
+			</ul>
+		</div>
+	</div>
+	<table>
+		<thead>
+			<tr>
+				<th data-field="id">ID</th>
+				<th data-field="name">Name</th>
+				<th data-field="email">email</th>
+				<th data-field="phoneNumber">phoneNumber</th>
+				<th data-field="status">Status</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="cant : ${cants}">
+				<td th:text="${cant.id}">ID</td>
+				<td th:text="${cant.name}">Name</td>
+				<td th:text="${cant.email}">Start Date</td>
+				<td th:text="${cant.phoneNumber}">Initiator</td>
+				<td th:text="${cant.status}">Status</td>
+				<td><a th:href="@{/claim?taskId=}+${cant.task.id}"
+					th:if="${cant.task.assignee == null}">认领</a> <a
+					th:href="@{/approve?taskId=}+${cant.task.id}"
+					th:if="${cant.task.assignee != null}">通过</a> <a
+					th:href="@{/reject?taskId=}+${cant.task.id}"
+					th:if="${cant.task.assignee != null}">拒绝</a> <a
+					th:href="@{/revoke?taskId=}+${cant.task.id}"
+					th:if="${cant.task.assignee != null && (cant.taskKey == 'task2' || cant.taskKey == 'task3')}">驳回</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+</html>
